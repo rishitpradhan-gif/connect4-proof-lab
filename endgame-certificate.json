@@ -1,0 +1,55 @@
+{
+  "rules": "standard gravity 9x9 connect-four",
+  "opening_moves_1_based": "39421491566662378229414344134332195837825578331151769764866818772488699279",
+  "winning_player": 1,
+  "proof": {
+    "moves": [
+      {
+        "column": 2,
+        "child": {
+          "moves": [
+            {
+              "column": 5,
+              "child": {
+                "moves": [
+                  {
+                    "column": 5,
+                    "child": {
+                      "terminal": "root_player_wins"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "column": 7,
+              "child": {
+                "moves": [
+                  {
+                    "column": 5,
+                    "child": {
+                      "terminal": "root_player_wins"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "column": 9,
+              "child": {
+                "moves": [
+                  {
+                    "column": 5,
+                    "child": {
+                      "terminal": "root_player_wins"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

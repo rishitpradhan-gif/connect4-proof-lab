@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checks": [
+    "released-identities",
+    "independent-bitboard-endgames",
+    "horizon-endgames",
+    "proof-number-endgames",
+    "strategy-tree",
+    "midgame-pairing-certificates",
+    "classified-counterattacks",
+    "small-board-classification",
+    "manuscript-witnesses",
+    "malformed-certificate-rejection"
+  ],
+  "wall_seconds": 6.392,
+  "opening_value": "UNKNOWN",
+  "long_opening_searches_run": false
+}

@@ -1,0 +1,30 @@
+Loading table "data/table-9x9.csv" . . .
+Done. Read 3029 table entries.
+
+Using a 9 x 9 board, a 2.00 GB table, and 1 threads.
+Running with strong solves disabled.
+
+Opening: 3 budget_seconds=1200
+Searching in range [-1, 0] . . .
+
+Search took 2268.47 s and explored 118602146 nodes (52 nodes per ms).
+Score is 1001.
+
+STATUS=UNKNOWN_TIMEOUT opening=3 side_to_move_value=null elapsed_seconds=2268.48
+Time to solve       = 2268.47 s
+Nodes per ms        = 52
+Nodes: 
+    Exact           = 0
+    Lower           = 34757706
+    Upper           = 24117653
+    Leaf            = 59726787
+    Total           = 118602146
+Table:
+    Hit rate        = 31.05%
+    New write rate  = 74.97%
+    Rewrite rate    = 0.00%
+    Overwrite rate  = 25.03%
+Best moves guessed  = 89.48%
+Worst moves guessed = 2.75%
+
+

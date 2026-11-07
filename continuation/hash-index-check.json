@@ -1,0 +1,7 @@
+{
+  "test": "encoded positions with middle-column color variations and fixed occupancy",
+  "encoded_positions": 20,
+  "old_distinct_buckets": 1,
+  "mixed_distinct_buckets": 20,
+  "correctness": "All table hits still require complete position-key equality; this is a performance fix."
+}

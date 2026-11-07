@@ -1,0 +1,241 @@
+{
+  "empty_board_value": "UNKNOWN",
+  "ultra_weak_solution_achieved": false,
+  "rules": "standard gravity 9x9 connect-four",
+  "latest_horizon": {
+    "completed_depth": 27,
+    "completed_value": 0,
+    "final_record": {
+      "status": "UNKNOWN_TIMEOUT",
+      "nodes": 726138880
+    },
+    "meaning": "Exact finite-horizon minimax reached 27 plies with zero payoff. This is not a full-game draw proof."
+  },
+  "large_table_opening_runs": [
+    {
+      "status": "UNKNOWN_TIMEOUT",
+      "node_visits": 95349658,
+      "wall_seconds": 2268.48,
+      "log": "runs/opening-5/search-1793936451271038000.log",
+      "opening": 5,
+      "table_mib": 2048
+    },
+    {
+      "status": "UNKNOWN_TIMEOUT",
+      "node_visits": 93670939,
+      "wall_seconds": 2268.48,
+      "log": "runs/opening-4/search-1793936451271097000.log",
+      "opening": 4,
+      "table_mib": 2048
+    },
+    {
+      "status": "UNKNOWN_TIMEOUT",
+      "node_visits": 118602146,
+      "wall_seconds": 2268.48,
+      "log": "runs/opening-3/search-1793936451271129000.log",
+      "opening": 3,
+      "table_mib": 2048
+    },
+    {
+      "status": "UNKNOWN_TIMEOUT",
+      "node_visits": 99147903,
+      "wall_seconds": 2268.48,
+      "log": "runs/opening-2/search-1793936451271603000.log",
+      "opening": 2,
+      "table_mib": 2048
+    },
+    {
+      "status": "UNKNOWN_TIMEOUT",
+      "node_visits": 108703217,
+      "wall_seconds": 2268.48,
+      "log": "runs/opening-1/search-1793936451272101000.log",
+      "opening": 1,
+      "table_mib": 2048
+    }
+  ],
+  "large_table_node_visits": 515473863,
+  "pairing_benchmark": {
+    "status": "UNKNOWN_TIMEOUT",
+    "node_visits": 8667439,
+    "wall_seconds": 261.42,
+    "log": "continuation/benchmark-pairing/search.log"
+  },
+  "baseline_benchmark": {
+    "status": "UNKNOWN_TIMEOUT",
+    "node_visits": 10790806,
+    "wall_seconds": 261.72,
+    "log": "continuation/benchmark-baseline/search.log"
+  },
+  "compact_short": {
+    "status": "UNKNOWN_TIMEOUT",
+    "node_visits": 291002009,
+    "wall_seconds": 60.13,
+    "log": "continuation/compact-center/search.log"
+  },
+  "compact_long": {
+    "status": "UNKNOWN_TIMEOUT",
+    "node_visits": 1233283398,
+    "wall_seconds": 701.47,
+    "log": "continuation/compact-center-long/search.log"
+  },
+  "dfpn_corrected": {
+    "status": "UNKNOWN_TIMEOUT",
+    "pn": 14329,
+    "dn": 16911,
+    "opening": "5",
+    "dfpn_visits": 24780800,
+    "expansions": 24761718,
+    "table_hits": 54220071,
+    "wall_seconds": 240.003
+  },
+  "dfpn_seeded": {
+    "status": "UNKNOWN_TIMEOUT",
+    "pn": 23461,
+    "dn": 28870,
+    "opening": "5",
+    "dfpn_visits": 348815360,
+    "expansions": 348710289,
+    "table_hits": 806790489,
+    "wall_seconds": 745.872
+  },
+  "seed_input": {
+    "input_files": 8,
+    "input_records": 23618,
+    "unique_position_keys": 14548,
+    "converged_exact_values": 9882,
+    "earliest_cached_ply": 16,
+    "contradictions": 0
+  },
+  "final_cache": {
+    "input_files": 9,
+    "input_records": 40272,
+    "unique_position_keys": 16650,
+    "converged_exact_values": 11051,
+    "earliest_cached_ply": 16,
+    "contradictions": 0
+  },
+  "pairing_obstruction": {
+    "status": "ALL_CLASSIFIED_ALWAYS_LEGAL_FIXED_PAIRINGS_REFUTED",
+    "opening_orbits": 5,
+    "column_matchings_per_opening": 105,
+    "prefix_length_options": [
+      1,
+      3,
+      5,
+      7,
+      9
+    ],
+    "classified_strategy_types": 328125,
+    "vertical_counterattacks": 327600,
+    "explicit_bottom_then_second_row_certificates": 525,
+    "max_counterattack_game_plies": 16,
+    "scope": "First-player fixed perfect matchings that prescribe an immediately legal partner reply for every gravity-consistent pair-completed state, even if terminal rules are ignored. Structural classification is proved in pairing-theorem.md. This does not rule out adaptive strategies or determine the game value."
+  },
+  "pairing_classification_checks": [
+    {
+      "width": 3,
+      "height": 3,
+      "opening_column": 1,
+      "all_cell_matchings_tested": 105,
+      "always_legal_matchings": 2,
+      "classification_matches": true,
+      "seconds": 0.00017958303214982152
+    },
+    {
+      "width": 3,
+      "height": 3,
+      "opening_column": 2,
+      "all_cell_matchings_tested": 105,
+      "always_legal_matchings": 2,
+      "classification_matches": true,
+      "seconds": 0.0001622500130906701
+    },
+    {
+      "width": 3,
+      "height": 5,
+      "opening_column": 2,
+      "all_cell_matchings_tested": 135135,
+      "always_legal_matchings": 3,
+      "classification_matches": true,
+      "seconds": 0.22028191696153954
+    },
+    {
+      "width": 5,
+      "height": 3,
+      "opening_column": 3,
+      "all_cell_matchings_tested": 135135,
+      "always_legal_matchings": 12,
+      "classification_matches": true,
+      "seconds": 0.23172099998919293
+    }
+  ],
+  "midgame_pairing_proofs": {
+    "status": "VERIFIED",
+    "certificates": 21,
+    "forced_losses": 9,
+    "compared_independent_exact_endgames": 100,
+    "method": "Perfect empty-cell partition; immediately legal bottom cross-pairs; consecutive vertical pairs; explicit coverage of all 180 opponent winning lines; guaranteed responder four for each -1 bound."
+  },
+  "reachable_draw": {
+    "status": "VERIFIED_REACHABLE_FULL_BOARD_DRAW",
+    "moves_1_based": "391312592458742532275685278998225892717344155499998768414433753463371118176668666",
+    "rows_top_to_bottom": [
+      "XOXOOXOOO",
+      "XOOOXOOOX",
+      "OXXXOXXOO",
+      "XXOXXXOXX",
+      "OXXOOOXOX",
+      "XOOOXXXOX",
+      "OXXXOXOXO",
+      "XXOOXXOXO",
+      "XOXOXOXOO"
+    ],
+    "P1_discs": 41,
+    "P2_discs": 40,
+    "winning_lines": 180,
+    "meaning": "A draw is legally possible; this does not give either player a drawing strategy from the opening."
+  },
+  "validation": {
+    "horizon": "PASS independent_horizon_tests=1000 independent_full_depth_endgames=100 seed=34987 depths=1..4",
+    "dfpn_seeded": "PASS independent_endgame_boolean_tests=100 bound_conversion_tests=18 seeded_records=14548 visits=240 expansions=168",
+    "pairing_engine": "PASS independent_array_states=169887 immediate_threat_checks=1493136 independent_exact_endgames=100 seed=20261105 losses=44 draws=26 wins=30 pairing_bounds=21 pairing_forced_losses=9",
+    "negative_pairing_tests": [
+      {
+        "test": "missing_pair",
+        "status": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "test": "unjustified_forced_win",
+        "status": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "test": "reversed_vertical_reply",
+        "status": "REJECTED_AS_EXPECTED"
+      }
+    ],
+    "dfpn_final_cache": "PASS independent_endgame_boolean_tests=100 bound_conversion_tests=18 seeded_records=16650 visits=240 expansions=168",
+    "final_build": "PASS independent_array_states=169887 immediate_threat_checks=1493136 independent_exact_endgames=100 seed=20261105 losses=44 draws=26 wins=30 pairing_bounds=21 pairing_forced_losses=9"
+  },
+  "default_configuration": {
+    "main_table_mib": 16,
+    "jobs": 1,
+    "main_pairing_oracle_enabled": false,
+    "dfpn_table_mib": 128,
+    "horizon_table_mib": 256
+  },
+  "limitations": [
+    "No opening result or opening strategy certificate was obtained.",
+    "Fixed-pairing refutations concern the precisely restricted always-playable response family, not all adaptive strategies.",
+    "Node counts are visits, not unique states; DFPN visits and alpha-beta visits are separate metrics.",
+    "Nominal budgets were exceeded during some high-memory or suspended-system runs; wall times are reported as observed.",
+    "The initial validated DFPN timeout log has descendant-state proof numbers from before exception-restoration was fixed; its proof numbers are superseded and are not used here."
+  ],
+  "code_sha256": {
+    "dfpn.cpp": "d15e4ba2cd8ecefe1cded29a0dabcdea28954971b8a8d667454cd680a9724ee4",
+    "horizon.cpp": "80e078556434fae3dcaa66c83833e2400a20f265d32890a90ee19ba25969d84b",
+    "pairing-proof.py": "492a58bc3c7e780d3f4e53c1fae6d8e0a245738c22cd8d48c51b1e63c494fb31",
+    "pairing-refutations.py": "1cb9cec1b6e9788decb1abb411ae261dff4f5cf9589009c3c688cd391c292fc5",
+    "engine/src/solver/pair_oracle.h": "572532cbfb78156b1636aa93609ef125a7b087a2129addcb73e37cc165dda3b7",
+    "engine/src/solver/settings.h": "c61c7aa9676e4868d349df0bb3c5851289c4f8496bc81cd64796842ff11c8e13"
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "width": 3,
+    "height": 3,
+    "opening_column": 1,
+    "all_cell_matchings_tested": 105,
+    "always_legal_matchings": 2,
+    "classification_matches": true,
+    "seconds": 0.00018183403881266713
+  },
+  {
+    "width": 3,
+    "height": 3,
+    "opening_column": 2,
+    "all_cell_matchings_tested": 105,
+    "always_legal_matchings": 2,
+    "classification_matches": true,
+    "seconds": 0.00016633298946544528
+  },
+  {
+    "width": 3,
+    "height": 5,
+    "opening_column": 2,
+    "all_cell_matchings_tested": 135135,
+    "always_legal_matchings": 3,
+    "classification_matches": true,
+    "seconds": 0.20802258397452533
+  },
+  {
+    "width": 5,
+    "height": 3,
+    "opening_column": 3,
+    "all_cell_matchings_tested": 135135,
+    "always_legal_matchings": 12,
+    "classification_matches": true,
+    "seconds": 0.2151015839772299
+  }
+]

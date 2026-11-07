@@ -1,0 +1,15 @@
+# A certificate-producing response-pairing bound
+
+This rule proves a result for a specific position. It is not an opening solution. The implementation is `engine/src/solver/pair_oracle.h`; an independent certificate constructor and checker is `pairing-proof.py`.
+
+Let C be the current player, D the opponent, and suppose an even number of cells remain. In every column with an even number of empty cells, pair successive empty cells vertically. In every column with an odd number, first reserve its lowest empty cell; then pair the rest vertically. The number of reserved cells is even. Match these reserved cells in pairs across columns.
+
+D's strategy is to complete the pair containing C's latest move. This is always legal. A reserved cell's partner is currently playable at the start, and both are consumed in the same round. For each vertical domino, C must take its lower cell first and D takes its upper cell. Once a bottom cross-pair has been consumed, its two columns have even remaining height and can be handled independently.
+
+Consequently D is guaranteed every vertical upper cell. In each cross-pair, C can own at most one endpoint. If every possible C four-cell line either contains a D stone, contains a guaranteed vertical upper cell, or contains both endpoints of some cross-pair, C can never win. Therefore V(C) ≤ 0. If D's existing stones plus its guaranteed upper cells contain a four, D must eventually win: C cannot win, and filling all cells would complete D's guaranteed four. Then V(C)=−1.
+
+The C++ implementation searches the small matching-cover problem on at most eight reserved cells. It first rejects any uncovered line containing fewer than two reserved cells. It then branches on a constrained line, choosing a disjoint pair of reserved cells in that line, until all lines are covered. Leftover reserved cells can be paired arbitrarily. It returns an unknown sentinel if no certificate is found; that sentinel is never treated as a heuristic draw.
+
+`pairing-proof.py` independently enumerates reserved-column matchings, constructs the actual cell partition, checks immediate bottom-pair legality and consecutive vertical structure, checks coverage of all 180 winning lines, and checks the guaranteed four whenever a forced-loss bound is claimed. On the 100 saved independently solved endgames, it produces 21 certificates, nine for forced losses. These agree with the C++ results and the exhaustive reference values.
+
+The short opening benchmark did not show a speed improvement: with identical starting bounds and 512 MiB tables, the pairing build visited 8,667,439 nodes in 261.42 seconds; the baseline visited 10,790,806 in 261.72 seconds. Both timed out without an opening value. These counts do not by themselves compare search progress, because proof pruning can reduce the number of nodes needed, and the system was under memory pressure. The default build disables the oracle; enable it with `ENABLE_PAIRING_ORACLE=1 sh build.sh`. The separate DFPN experiment uses the proved bound directly.

@@ -1,0 +1,8 @@
+{
+  "input_files": 9,
+  "input_records": 40272,
+  "unique_position_keys": 16650,
+  "converged_exact_values": 11051,
+  "earliest_cached_ply": 16,
+  "contradictions": 0
+}

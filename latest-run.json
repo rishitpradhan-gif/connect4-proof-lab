@@ -1,0 +1,47 @@
+[
+  {
+    "opening": 5,
+    "reflected_opening": 5,
+    "status": "UNKNOWN_TIMEOUT",
+    "exit_code": 3,
+    "nodes": 95349658,
+    "side_to_move_value": null,
+    "log": "runs/opening-5/search-1793936451271038000.log"
+  },
+  {
+    "opening": 4,
+    "reflected_opening": 6,
+    "status": "UNKNOWN_TIMEOUT",
+    "exit_code": 3,
+    "nodes": 93670939,
+    "side_to_move_value": null,
+    "log": "runs/opening-4/search-1793936451271097000.log"
+  },
+  {
+    "opening": 3,
+    "reflected_opening": 7,
+    "status": "UNKNOWN_TIMEOUT",
+    "exit_code": 3,
+    "nodes": 118602146,
+    "side_to_move_value": null,
+    "log": "runs/opening-3/search-1793936451271129000.log"
+  },
+  {
+    "opening": 2,
+    "reflected_opening": 8,
+    "status": "UNKNOWN_TIMEOUT",
+    "exit_code": 3,
+    "nodes": 99147903,
+    "side_to_move_value": null,
+    "log": "runs/opening-2/search-1793936451271603000.log"
+  },
+  {
+    "opening": 1,
+    "reflected_opening": 9,
+    "status": "UNKNOWN_TIMEOUT",
+    "exit_code": 3,
+    "nodes": 108703217,
+    "side_to_move_value": null,
+    "log": "runs/opening-1/search-1793936451272101000.log"
+  }
+]

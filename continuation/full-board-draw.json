@@ -1,0 +1,19 @@
+{
+  "status": "VERIFIED_REACHABLE_FULL_BOARD_DRAW",
+  "moves_1_based": "391312592458742532275685278998225892717344155499998768414433753463371118176668666",
+  "rows_top_to_bottom": [
+    "XOXOOXOOO",
+    "XOOOXOOOX",
+    "OXXXOXXOO",
+    "XXOXXXOXX",
+    "OXXOOOXOX",
+    "XOOOXXXOX",
+    "OXXXOXOXO",
+    "XXOOXXOXO",
+    "XOXOXOXOO"
+  ],
+  "P1_discs": 41,
+  "P2_discs": 40,
+  "winning_lines": 180,
+  "meaning": "A draw is legally possible; this does not give either player a drawing strategy from the opening."
+}

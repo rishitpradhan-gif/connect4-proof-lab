@@ -1,0 +1,26 @@
+Connect Four Proof Lab
+Research project maintained by Rishit Pradhan, 2026.
+
+UPSTREAM ENGINE
+The engine/ directory is adapted from Christophe Steininger's c4 project:
+https://github.com/ChristopheSteininger/c4
+Baseline commit: fa27f186d2f1bf8e8fd61bfad63454c6e4b0431c
+License: GNU Affero General Public License version 3; see LICENSE and engine/LICENSE.
+The upstream project credits John Tromp, Pascal Pons, and Guido Zuidhof.
+Those contributions and rights remain with their respective authors.
+
+PROJECT DEVELOPMENT
+The research fork adds full-key identity checks for the 9x9 representation,
+bounded/checkpointed experiment drivers, cancellation and shutdown fixes,
+and an optional sufficient pairing-bound oracle. Separate project tools
+include horizon minimax, proof-number search, independent certificate
+checkers, exhaustive response-family replay, cache reconciliation, and the
+LaTeX developmental research note. Packaging adds a reproducible verifier,
+a CI workflow template, release metadata, and documentation.
+
+ASSISTANCE AND CLAIMS
+Development used AI-assisted implementation, mathematical exploration, and
+proof drafting. The project does not claim that the 9x9 opening is solved,
+that its results are literature-first, or that its manuscript is peer-reviewed
+or proof-assistant verified. Separate verification implementations should not
+be confused with independent external review.

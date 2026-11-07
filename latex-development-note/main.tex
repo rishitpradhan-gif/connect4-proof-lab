@@ -1,0 +1,788 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{multicol,needspace}
+\usepackage{booktabs,array,longtable}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Response pairings in gravity Connect Four}
+\fancyhead[R]{\small Developmental note}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist{itemsep=2pt,topsep=4pt}
+\emergencystretch=2em
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Pone}{\mathsf{P}_1}
+\newcommand{\Ptwo}{\mathsf{P}_2}
+\newcommand{\B}{\mathcal B}
+\newcommand{\W}{\mathcal W}
+\newcommand{\E}{\mathcal E}
+\newcommand{\UL}{\mathrm{UL}}
+\newcommand{\Val}{\operatorname{V}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\AND}{\mathbin{\&}}
+\newcommand{\code}[1]{\texttt{#1}}
+\title{Universally Legal Response Pairings\\in Gravity Connect Four\\[4pt]
+\large Classification, obstructions, and certified midgame bounds}
+\author{Prepared for Rishit Pradhan\\\small Developmental research note and proof audit}
+\date{6 November 2026}
+\begin{document}
+\maketitle
+\vspace{-10pt}
+\begin{abstract}
+We formalize a restricted class of fixed response strategies for finite gravity
+Connect Four and prove a structural classification by isolated column
+advancement. On an odd-width, odd-height board after one opening disc, this
+classification yields an exact counting formula. We then prove that on every
+nine-column board of odd height at least five, every universally legal fixed
+response matching for the first player admits a second-player counterattack
+within sixteen plies. Separately, we give a sufficient, certificate-producing
+midgame theorem based on vertical pairs and currently playable cross-pairs.
+An explicit reachable draw and an eight-node winning endgame certificate
+illustrate the distinction between a position proof and an opening solution.
+The associated computation completed a 27-ply finite-horizon search of the
+empty $9\times9$ board, but did not determine its full-game value. The present
+note therefore does not claim a weak or ultra-weak solution of that board,
+or priority for the underlying pairing ideas.
+\end{abstract}
+\vspace{3pt}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\textbf{Status.} The value of the empty $9\times9$
+board remains unknown in this research record. Theorems below concern stated
+strategy classes and sufficient position certificates. Search statistics are
+reported separately as computational observations.}}
+\end{center}
+{\small
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+}
+\newpage
+
+\section[Game and unresolved objective]{Game, notation, and the unresolved objective}\label{sec:game}
+Let
+\[
+ \B_{w,h}=\{(c,r):1\le c\le w,\ 1\le r\le h\},
+\]
+with row $1$ at the bottom. A gravity position has occupied cells
+$\{(c,1),\ldots,(c,a_c)\}$ in column $c$, for heights $0\le a_c\le h$.
+A move in a nonfull column $c$ occupies $(c,a_c+1)$. The players alternate,
+with $\Pone$ first. A player wins immediately on obtaining four of its discs
+in a horizontal, vertical, or diagonal line. Play ends at the first win,
+or with a draw when all cells are occupied without a win. There are no
+passes, removals, wraparound columns, or mis\`ere rules.
+
+Let $\W_{w,h}$ be the family of four-cell winning sets. For $w,h\ge4$,
+\begin{equation}\label{eq:lines}
+ |\W_{w,h}|=h(w-3)+w(h-3)+2(w-3)(h-3).
+\end{equation}
+Thus $|\W_{9,9}|=54+54+36+36=180$. Equation~\eqref{eq:lines} follows by
+choosing the leftmost cell of a horizontal four, the bottom cell of a
+vertical four, and the bottom endpoint of either diagonal orientation.
+
+For a legal nonterminal position $S$, define $\Val(S)\in\{-1,0,1\}$ from the
+perspective of the player to move: loss, draw, and win, respectively, under
+optimal play. At a terminal position immediately after an opponent's win,
+set $\Val=-1$; at a terminal draw, set $\Val=0$. Backward induction gives
+\begin{equation}\label{eq:minimax}
+ \Val(S)=\max_{c\in L(S)}\{-\Val(S_c)\},
+\end{equation}
+where $L(S)$ is the set of nonfull columns and $S_c$ is the position after
+playing $c$. This is a finite recursion because each move consumes a cell.
+
+\begin{definition}
+A \emph{weak solution} determines the empty-board value and supplies a
+strategy attaining that value against every legal opposing continuation.
+An \emph{ultra-weak solution}, in the terminology used here, establishes the
+empty-board value without necessarily constructing an executable strategy.
+\end{definition}
+
+Neither objective follows from a favorable principal variation, an unbeaten
+self-play record, a nonzero heuristic score, or a timeout. In particular,
+our restricted obstruction below is not a second-player solution of the
+full game. The strategic-rule tradition for Connect Four includes Allis's
+Claimeven and Baseinverse ideas~\cite{allis}; our pairing formalization is
+presented as a self-contained research development, without a literature
+priority claim.
+
+\section[Universally legal response matchings]{Universally legal fixed response matchings}\label{sec:classification}
+The classification concerns gravity and occupancy only. For its definition,
+we temporarily ignore the rule stopping play after four in a row.
+
+\begin{definition}\label{def:ul}
+Fix an initial gravity occupancy $S$ with an even number of empty cells
+$\E(S)$. A \emph{response matching} $M$ is a perfect matching of $\E(S)$.
+An initiator chooses any legal empty cell $x$; the responder must immediately
+occupy its mate $M(x)$. A \emph{completed-round state} is a state reached
+from $S$ after finitely many such legal two-cell rounds.
+
+The matching is \emph{universally legal}, abbreviated $\UL$, if at every
+completed-round state, every legal initiating move has an immediately legal
+mate response. This requirement is imposed even on occupancies that would
+already have ended a Connect Four game.
+\end{definition}
+
+This last qualification is substantial. A matching with an illegal response
+only after the responder has already won is not necessarily $\UL$.
+Adaptive matchings and fallback moves are also outside this definition.
+
+A \emph{front} of a nonfull column is its lowest empty cell. For a column
+with $r_i=h-a_i$ empty cells, enumerate its empty cells from bottom to top
+as $u_{i,1},\ldots,u_{i,r_i}$.
+
+\begin{lemma}[Initial fronts]\label{lem:fronts}
+At the start of a universally legal response process, the mate of each
+front is either the cell immediately above it in the same column, or the
+front of a different column.
+\end{lemma}
+\begin{proof}
+Let $x$ be a front. Before the initiating move at $x$, the only legal cells
+are the current fronts. After that move, the only newly legal cell is the
+cell immediately above $x$, if it exists. Its mate must be one of these
+legal cells. A different cell higher in another column remains unsupported.
+\end{proof}
+
+\begin{lemma}[Isolated advancement]\label{lem:isolation}
+Suppose that at a completed-round state the initial fronts of a collection
+of columns are matched internally in that collection, and all other columns
+are kept frozen.
+\begin{enumerate}[label=(\roman*)]
+\item If a column's front is matched vertically to the next cell, all its
+remaining cells are paired into consecutive vertical dominoes.
+\item If the fronts of two columns are matched to each other, their
+cross-column pairs form a common initial prefix of their remaining cells.
+After the prefix ends, all remaining pairs in each column are consecutive
+vertical dominoes.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+For (i), consume the front's vertical pair while leaving every other
+column unchanged. By \cref{lem:fronts}, each frozen front was initially matched either to
+another initial front or to its own immediate successor. In particular,
+none was matched to a cell newly exposed in the advancing column. A cell higher in a frozen column is not playable. By universal
+legality, the newly exposed front must therefore be paired vertically to
+the cell directly above it. Repeating the same argument advances this
+column alone to completion. Its remaining cell count must be even.
+
+For (ii), consume the cross-pair and keep all other columns frozen. The
+new fronts, when both exist, cannot be matched to any outside front:
+those fronts have their own fixed mates. They cannot be matched to any
+higher outside cell, because it is unsupported. By
+\cref{lem:fronts}, either the two new fronts are paired to each other,
+or at least one of them is paired vertically.
+
+If one front is paired vertically, the other cannot be paired to either
+cell of that vertical pair, since both mates are already fixed. It also
+cannot be paired to a higher cell in that column: that cell is not playable
+at the present state, whereas the other front can be initiated immediately.
+It must therefore be paired vertically as well. Part (i), now advancing
+either column with every other column frozen, forces vertical pairs above
+that point in both columns. If instead a column is exhausted at the end
+of a cross-pair, the other column, if nonempty, is forced to finish
+vertically by the same isolated-advancement argument. Consequently the
+cross-pairs form a prefix and cannot resume after a vertical split.
+\end{proof}
+
+\Needspace{14\baselineskip}
+\begin{theorem}[Structure of universally legal response matchings]\label{thm:structure}
+For an arbitrary initial gravity occupancy, a response matching is
+universally legal if and only if the nonempty columns admit a partition
+into components of the following two types:
+\begin{enumerate}[label=(\alph*)]
+\item a single column with an even number of empty cells, matched into
+consecutive vertical dominoes;
+\item two columns $i,j$ with $k$ cross-pairs
+\[
+ \{u_{i,t},u_{j,t}\},\qquad 1\le t\le k,
+\]
+for some $1\le k\le\min(r_i,r_j)$, followed by consecutive vertical
+dominoes in each column. Necessarily $r_i-k$ and $r_j-k$ are even.
+\end{enumerate}
+The component partition and each nonempty cross-prefix are determined by
+the matching.
+\end{theorem}
+\begin{proof}
+By \cref{lem:fronts}, the initial fronts are paired either vertically
+within their columns or reciprocally with another front. This partitions
+the nonempty columns initially into singletons and two-column components.
+No column belongs to two components, because a front has one mate.
+
+Each component can be advanced on its own, leaving all other components
+frozen. The argument in \cref{lem:isolation} shows that it cannot acquire a
+later connection to another component: an outside front already has its
+fixed mate, and every higher outside cell is unsupported when the component
+is advanced alone. The same lemma supplies exactly the vertical singleton
+form and the cross-prefix--then--vertical form. The parity conditions follow
+because the tails consist of dominoes. Initial front mates determine the
+components; the maximal consecutive cross-prefix determines $k$.
+
+Conversely, consider a matching of the asserted form. In a singleton,
+every initiating move at a domino's lower cell exposes its upper mate.
+In a two-column component, each cross-pair consumes one cell in each
+column, keeping the two fronts synchronized by relative depth until the
+prefix ends. Both front cells of the next cross-pair are then playable.
+Once the prefix is exhausted, the columns are independent vertical stacks
+of dominoes. Interleaving rounds from different components changes none of
+these facts. Every prescribed response is therefore legal.
+\end{proof}
+
+\subsection[Counting after one opening]{Counting after one opening disc}
+\begin{corollary}\label{cor:count}
+Let $w=2m+1$ and $h=2n+1$. After one bottom-row opening disc in a fixed
+column $q$, the number of universally legal response matchings is
+\begin{equation}\label{eq:count}
+ N_{w,h}=(2m-1)!!\,(n+1)^m,
+\end{equation}
+with $(-1)!!=1$ when $m=0$.
+\end{corollary}
+\begin{proof}
+The opening column has $2n$ empty cells; every other column has $2n+1$.
+Two columns in a cross component have the same empty-count parity by
+\cref{thm:structure}. Thus the unique even column cannot join an odd
+column and is a vertical singleton. Each odd column must join another odd
+column. There are $(2m-1)!!$ perfect matchings of these $2m$ columns.
+Each paired component permits exactly the odd prefix lengths
+$1,3,\ldots,2n+1$, giving $n+1$ choices independently for each of the $m$
+components. The representation is unique, so the product neither omits nor
+double-counts a matching.
+\end{proof}
+
+For $9\times9$, this is
+\[
+ N_{9,9}=7!!\,5^4=105\cdot625=65\,625
+\]
+for each fixed opening, or $590\,625$ configurations over all nine openings.
+Reflection allows the five representative openings $q=1,\ldots,5$ to cover
+the remaining four. The enumeration therefore checked
+$5N_{9,9}=328\,125$ configurations. This last number is \emph{not} the
+number of distinct matching orbits under reflection; at the central opening,
+reflection can still identify two of the checked matchings.
+
+\section[Counterattack obstruction]{A counterattack theorem for nine columns}\label{sec:obstruction}
+The next theorem is an extension of the recorded $9\times9$ obstruction.
+Its proof uses only that the height is odd and at least five.
+
+\begin{theorem}[Restricted response obstruction]\label{thm:obstruction}
+On a $9\times H$ board with odd $H\ge5$, let $\Pone$ open in any column
+and thereafter respond according to a fixed universally legal perfect
+matching of the remaining cells. Then $\Ptwo$ has a counterstrategy that
+wins by game ply $16$, or earlier. Hence no strategy in this specified
+family guarantees $\Pone$ a nonloss.
+\end{theorem}
+\begin{proof}
+By \cref{thm:structure,cor:count}, the opening column is vertical, and the
+other eight columns form four paired components with odd cross-prefix
+lengths. Write $q$ for the opening column.
+
+\textbf{Case 1: some cross-prefix has length at least three.}
+Choose one column $a$ in that component, whose partner is $b$. Player
+$\Ptwo$ drops its first four discs consecutively in column $a$.
+The first three prescribed replies lie in column $b$, at rows $1,2,3$.
+Player $\Ptwo$ therefore wins vertically at $(a,4)$, on game ply $8$.
+The cell exists since $H\ge5$. Before that move, $\Pone$ has only the
+opening disc in column $q\notin\{a,b\}$ and at most three discs in column
+$b$. Such a set cannot contain four collinear cells: a vertical line in
+$b$ has at most three, and a nonvertical line contains at most one cell
+of each column. Thus $\Pone$ cannot have won earlier.
+
+\textbf{Case 2: every cross-prefix has length one.}
+Only the bottom cells of each paired component are cross-paired; above
+them, all columns have vertical pairs $(2,3),(4,5),\ldots$.
+For each of the four bottom pairs, let $\Ptwo$ choose one endpoint and let
+$\Pone$ receive the other as its prescribed response. We first show that
+these choices can avoid a $\Pone$ bottom-row four.
+
+Choose the four orientations uniformly and independently. An interval of
+four bottom cells containing $q$ is wholly $\Pone$ with probability at
+most $2^{-3}$: if two of its other cells are paired to each other the
+probability is zero; otherwise it fixes three independent orientations.
+An interval not containing $q$ has probability at most $2^{-4}$ by the
+same reasoning. There are six four-cell intervals, at most four containing
+$q$. The union bound gives
+\begin{equation}\label{eq:union}
+ \Pr(\text{$\Pone$ has a bottom-row four})
+ \le \frac4{8}+\frac2{16}=\frac58<1.
+\end{equation}
+Consequently a safe orientation exists.
+
+Fix such an orientation and fill the four bottom pairs, in any order.
+Player $\Pone$ cannot win during this preparation: its occupied cells
+are a subset of its eventual safe bottom-row set. If $\Ptwo$ wins during
+preparation, the theorem already holds. Otherwise the entire bottom row
+is now full, after game ply $9$.
+
+Player $\Ptwo$ next plays row $2$ in columns $1,2,3,4$ in that order.
+Each prescribed reply is row $3$ in the same column. The fourth initiating
+move completes a horizontal four for $\Ptwo$, on ply $16$.
+Before that move, $\Pone$ has no row-$2$ cells, no cells above row $3$,
+and at most three row-$3$ cells. Its bottom row has no four by construction.
+It cannot therefore win horizontally, vertically, or diagonally before
+$\Ptwo$ wins. This completes both cases.
+\end{proof}
+
+\begin{corollary}[Exact $9\times9$ enumeration split]\label{cor:split}
+For five representative openings, $327\,600$ classified configurations
+have a prefix of length at least three. The remaining $525$ have every
+prefix length one. Their respective counterattacks terminate by plies $8$
+and $16$.
+\end{corollary}
+\begin{proof}
+For each fixed opening, the all-one-prefix choices number $105$; all other
+choices number $65\,625-105=65\,520$. Multiply each number by five.
+\end{proof}
+
+\begin{remark}[Quantifier scope]
+The conclusion is
+\[
+ \forall M\in\UL\quad\exists\ \text{a $\Ptwo$ counterstrategy against }M.
+\]
+It is not a statement that $\Ptwo$ beats arbitrary $\Pone$ strategies,
+and it does not provide a universal counterstrategy against a hidden or
+adaptively changing matching. The full-game value is not determined.
+\end{remark}
+
+\section[Certified midgame bounds]{A sufficient midgame certificate}\label{sec:oracle}
+Let $C$ be the player to move and $D$ the responder in an ongoing position
+$S$, with occupied sets $A_C,A_D$. Suppose $|\E(S)|$ is even. In every
+column with an even number of empty cells, pair successive empty cells
+vertically. In each column with an odd number, reserve its lowest empty
+cell and vertically pair the cells above it. The number of reserved cells
+is even, so match them in arbitrary cross-column pairs.
+
+Denote the vertical pairs by $M_v$, the reserved-cell pairs by $M_b$, and
+write
+\[
+ U=\{\text{upper endpoint of a pair in }M_v\},\qquad G=A_D\cup U.
+\]
+The reserved cells can have different absolute row coordinates; all are
+currently playable, which is the fact needed for legality.
+
+\begin{lemma}\label{lem:midlegal}
+The strategy in which $D$ completes the pair containing $C$'s latest move
+is universally legal. Player $C$ never obtains a cell of $U$, and obtains
+at most one endpoint of each pair in $M_b$.
+\end{lemma}
+\begin{proof}
+The reserved bottom cells of an unconsumed cross-pair are both playable.
+Consuming the pair leaves even empty heights in its two columns. All other
+rounds consume a consecutive vertical domino; only its lower cell is
+playable before the round, and the initiating move exposes the upper
+response. An induction on completed rounds proves legality and assigns
+each vertical upper cell to $D$. Pair completion gives opposite owners to
+the two cells of every cross-pair.
+\end{proof}
+
+\begin{theorem}[Line-cover certificate]\label{thm:cover}
+With the construction above, suppose
+\begin{equation}\label{eq:cover}
+ \forall L\in\W_{w,h},\qquad
+ L\cap G\ne\varnothing
+ \quad\text{or}\quad
+ \exists\{u,v\}\in M_b:\ \{u,v\}\subseteq L.
+\end{equation}
+Then $\Val(S)\le0$. If, in addition,
+\begin{equation}\label{eq:guaranteedwin}
+ \exists L_D\in\W_{w,h}\quad L_D\subseteq G,
+\end{equation}
+then $\Val(S)=-1$.
+\end{theorem}
+\begin{proof}
+Fix any winning line $L$ for the current player $C$. If it meets $A_D$,
+that opposing disc blocks it permanently. If it meets $U$, the cell is
+never owned by $C$ by \cref{lem:midlegal}; before it is filled, its being
+empty already prevents completion by $C$. Otherwise
+\eqref{eq:cover} supplies a cross-pair inside $L$, and $C$ cannot obtain
+both endpoints. Thus no legal initiating continuation can give $C$ a win.
+This proves $\Val(S)\le0$.
+
+If \eqref{eq:guaranteedwin} holds, continue the response strategy. The
+board is finite and each completed round consumes two cells. Unless $D$
+has already won, play must reach full occupancy, at which point all cells
+of $U$ have been obtained by $D$. Then $L_D$ is a completed $D$ line,
+contradicting a terminal draw. Since $C$ cannot win, $D$ forces a win and
+$\Val(S)=-1$.
+\end{proof}
+
+\subsection[Matching-cover search]{A finite matching-cover search}
+Let $O$ be the reserved cells and define the remaining constraints
+\[
+ \mathcal R=\{L\cap O:L\in\W_{w,h},\ L\cap G=\varnothing\}.
+\]
+A certificate exists in this construction exactly when there is a perfect
+matching of $O$ such that every $R\in\mathcal R$ contains one of its
+pairs. A constraint with $|R|<2$ rules out this construction immediately.
+One can branch on a constrained $R$, select two of its still-unmatched
+vertices, remove constraints covered by that pair, and recurse.
+
+This backtracking is complete for the stated construction: every full
+solution must select a pair in the chosen constraint, so one branch agrees
+with it. Once all constraints are covered, the unused reserved vertices
+have even cardinality and may be paired arbitrarily. On a nine-column
+board, $|O|$ is even and at most eight. Failure to find such a matching
+establishes only failure of this sufficient certificate format, not a
+winning value for $C$.
+
+\subsection[Explicit winning endgame]{A fully explicit winning endgame}\label{sec:endgame}
+Use columns $A,\ldots,I$ and write $X$ for $\Pone$, $O$ for $\Ptwo$.
+After the 74-ply history in \cref{app:histories}, the board is
+\begin{equation}\label{eq:endboard}
+\begin{array}{c|ccccccccc}
+ &A&B&C&D&E&F&G&H&I\\\hline
+9&X&\cdot&O&O&\cdot&X&\cdot&O&\cdot\\
+8&O&O&X&O&\cdot&X&X&X&O\\
+7&O&X&X&X&\cdot&O&O&O&X\\
+6&X&O&X&O&\cdot&X&X&O&O\\
+5&X&O&O&X&X&O&O&X&X\\
+4&X&X&O&X&O&X&X&O&O\\
+3&O&O&O&X&X&O&X&X&O\\
+2&O&O&X&O&X&X&O&O&X\\
+1&X&O&X&X&X&O&O&X&O
+\end{array}
+\end{equation}
+Its height vector is $(9,8,9,9,5,9,8,9,8)$ and it is $\Pone$'s turn.
+
+\begin{proposition}\label{prop:endgame}
+In \eqref{eq:endboard}, $\Pone$ wins within three further plies by playing
+$B9$ and then responding in column $E$.
+\end{proposition}
+\begin{proof}
+The move $B9$ is legal. The only remaining nonfull columns are then
+$E,G,I$. If $\Ptwo$ plays $E6$, the legal response $E7$ completes the
+horizontal line $B7,C7,D7,E7$. If $\Ptwo$ instead plays $G9$ or $I9$,
+the legal response $E6$ completes the diagonal $B9,C8,D7,E6$.
+None of the three opposing moves is a win, as checked directly from
+\eqref{eq:endboard}. These are all legal replies, so the strategy covers
+every opponent continuation. The corresponding rooted certificate has
+one root, one node after $B9$, three opponent-move nodes, and three winning
+leaves: eight nodes in total.
+\end{proof}
+
+\Needspace{20\baselineskip}
+\section{An explicit reachable draw}\label{sec:draw}
+The existence of a legal drawn game is different from the existence of a
+strategy forcing a draw. It does, however, refute any argument that odd
+board area by itself makes a draw impossible.
+
+\begin{proposition}\label{prop:draw}
+There exists a legal drawn game of length $81$ on the $9\times9$ board.
+\end{proposition}
+\begin{proof}
+Take the 81-digit history $\sigma$ in \cref{app:histories}. Each digit
+occurs nine times, so no move overfills a column. Alternating odd and even
+plies gives the following final board:
+\[
+\begin{array}{c|ccccccccc}
+ &A&B&C&D&E&F&G&H&I\\\hline
+9&X&O&X&O&O&X&O&O&O\\
+8&X&O&O&O&X&O&O&O&X\\
+7&O&X&X&X&O&X&X&O&O\\
+6&X&X&O&X&X&X&O&X&X\\
+5&O&X&X&O&O&O&X&O&X\\
+4&X&O&O&O&X&X&X&O&X\\
+3&O&X&X&X&O&X&O&X&O\\
+2&X&X&O&O&X&X&O&X&O\\
+1&X&O&X&O&X&O&X&O&O
+\end{array}
+\]
+It contains $41$ discs of $X$ and $40$ of $O$. For an exact arithmetic
+check of all winning lines, index a cell by $j=9(r-1)+(c-1)$ and encode
+a color set as an integer whose $j$th bit is its occupancy. In hexadecimal,
+\begin{align*}
+ X&=\mathtt{25889bb7746b8ab96655},\\
+ O&=\mathtt{1da7764488b94754699aa},\\
+ X\mathbin{\vert}O&=2^{81}-1=\mathtt{1ffffffffffffffffffff}.
+\end{align*}
+For a positive direction shift $d$, let $Q_d$ mark all valid starting
+cells of a four in that direction. The exact masks are
+\[
+\begin{array}{ccl}
+ d&\text{direction}&Q_d\ \text{(hexadecimal)}\\\hline
+ 1&\text{horizontal}&\mathtt{3f1f8fc7e3f1f8fc7e3f}\\
+ 9&\text{vertical}&\mathtt{3fffffffffffff}\\
+10&\text{rising right}&\mathtt{7e3f1f8fc7e3f}\\
+ 8&\text{rising left}&\mathtt{3f1f8fc7e3f1f8}
+\end{array}
+\]
+Equivalently, the masks have the exact formulas
+\[
+\begin{aligned}
+ Q_1&=63\sum_{r=0}^{8}2^{9r}, & Q_9&=2^{54}-1,\\
+ Q_{10}&=63\sum_{r=0}^{5}2^{9r}, & Q_8&=504\sum_{r=0}^{5}2^{9r}.
+\end{aligned}
+\]
+Direct integer calculation gives, for each $d\in\{1,9,10,8\}$ and each
+$Z\in\{X,O\}$,
+\begin{equation}\label{eq:drawbits}
+ Q_d\AND Z\AND(Z\mathbin{\gg}d)
+       \AND(Z\mathbin{\gg}2d)\AND(Z\mathbin{\gg}3d)=0.
+\end{equation}
+Here $\AND$ and $\gg$ denote bitwise AND and right shift. The starting
+masks exclude row wraparound, so \eqref{eq:drawbits} checks exactly the
+180 winning sets. Neither color has four on the final board. Since a
+color's occupied set only grows, no earlier prefix could have contained
+four either. The sequence is therefore legal up to its full-board draw.
+\end{proof}
+
+\section[Finite-horizon computation]{What finite-horizon computation can establish}\label{sec:horizon}
+Define $\Val_d(S)$ by using the same terminal values as $\Val$ and the
+recursion \eqref{eq:minimax}, but assigning value zero to every nonterminal
+position at depth zero. A depth-zero cutoff is an unresolved leaf, not an
+assertion that the full game is drawn.
+
+\Needspace{12\baselineskip}
+\begin{proposition}\label{prop:horizon}
+If an exact finite-horizon computation gives $\Val_d(S)=1$, then
+$\Val(S)=1$. If it gives $\Val_d(S)=-1$, then $\Val(S)=-1$.
+If $\Val_d(S)=0$, neither player has a strategy forcing its own win within
+$d$ additional plies, but the full-game value can still be any of
+$-1,0,1$.
+\end{proposition}
+\begin{proof}
+The nonzero implications follow by induction on $d$. A positive value
+has a child of negative value; by induction the opponent loses in that
+child. A negative value has every child positive; by induction the
+opponent wins after every legal choice. The terminal cases are immediate.
+Equivalently, in the truncated game a nonzero value is certified by a
+strategy subtree all of whose relevant leaves are actual terminal wins,
+since cutoff leaves have value zero.
+
+A zero value is the minimax value of a finite game in which unresolved
+cutoffs pay zero. Backward induction gives each player a strategy
+preventing the other from obtaining a positive terminal payoff before the
+cutoff. It does not determine what occurs beyond the cutoff.
+\end{proof}
+
+\textbf{Recorded computational observation.} The corrected implementation
+reported
+\[
+ \Val_{27}(S_\varnothing)=0.
+\]
+This is a logged software result, not a separate machine-checked formal
+proof object. The depth-$28$ iteration did not finish. The final record
+contains $726\,138\,880$ node visits including that unfinished iteration;
+the completed depth-$27$ record contains $338\,098\,896$ cumulative visits.
+Tests compare 1,000 short-horizon cases with a plain-array implementation
+and 100 endgames with independent full-depth values. These tests increase
+confidence in the implementation but do not constitute an opening solution.
+
+\section{Certificate and search semantics}\label{sec:semantics}
+\subsection{Strategy-tree certificates}
+For a claimed winner, a strategy-tree certificate must retain at least one
+legal prescribed move on that player's turns and \emph{every} legal move
+on the opponent's turns. Every leaf must be an actual win for the claimed
+winner. A verifier replays each edge under the rules and rejects omitted
+opponent replies, illegal moves, and false terminal leaves.
+
+\begin{proposition}\label{prop:tree}
+A finite strategy tree satisfying those conditions proves a forced win
+at its root.
+\end{proposition}
+\begin{proof}
+Induct upward from winning leaves. At the claimed winner's nodes, a
+retained child supplies a winning move. At the opponent's nodes, every
+legal move is retained and leads to a winning child. The root is therefore
+won regardless of the opponent's choices.
+\end{proof}
+
+\subsection{Proof-number search and WDL bounds}
+For the Boolean proposition ``$\Pone$ can force a win,'' $\Pone$ moves are
+OR nodes and $\Ptwo$ moves are AND nodes. At a true terminal proposition
+assign proof/disproof numbers $(0,\infty)$; at a false one assign
+$(\infty,0)$. An unresolved frontier starts with $(1,1)$. The recurrences
+are
+\begin{align*}
+ (p,d)_{\rm OR}&=\left(\min_i p_i,\ \sum_i d_i\right),\\
+ (p,d)_{\rm AND}&=\left(\sum_i p_i,\ \min_i d_i\right).
+\end{align*}
+A zero proof number is a true proposition by the same OR/AND induction
+as \cref{prop:tree}; a zero disproof number is a false proposition.
+Positive numbers are search bookkeeping, not probabilities or percentages
+complete. The recorded depth-first proof-number searches timed out with
+both root numbers positive.
+
+A WDL cache stores exact values or inequalities $\Val(S)\ge a$ and
+$\Val(S)\le b$. Its Boolean interpretation must account for whose turn it
+is. For example, $\Val(S)\le0$ disproves a $\Pone$ win when $\Pone$ is to
+move, whereas $\Val(S)\ge0$ disproves it when $\Ptwo$ is to move. A draw is
+also a false instance of ``$\Pone$ can force a win.'' The implementation
+checks all 18 combinations of turn parity, bound type, and bound value
+against the allowed outcomes.
+
+\subsection[Hashing and cached bounds]{Hashing and compatible cached bounds}
+The main board representation uses nine columns of ten bits, including a
+header bit per column, so a position key needs up to 90 bits and is stored
+in a 128-bit integer. A table bucket index is only a lookup aid. A retrieved
+entry is accepted only after comparison of the complete normalized key.
+Consequently an index collision can discard useful information but cannot
+by itself justify substituting a different position's value.
+
+For several valid bounds on the same key, define
+\[
+ \ell=\max\bigl(\{-1\}\cup\{\text{stored lower bounds}\}\bigr),\qquad
+ u=\min\bigl(\{1\}\cup\{\text{stored upper bounds}\}\bigr).
+\]
+Necessarily $\ell\le\Val(S)\le u$. Thus $\ell=u$ supplies an exact value,
+and $\ell>u$ detects incompatible claims. The final merger retained
+$16\,650$ distinct keys, with $11\,051$ exact values and no detected bound
+contradictions. Absence of contradictions is a consistency check, not an
+independent correctness proof of every cached value. The normalized-key
+and dead-stone reductions remain part of the trusted implementation.
+
+\section[Evidence and research status]{Auditable evidence and research status}\label{sec:evidence}
+The mathematical statements in \cref{sec:classification,sec:obstruction,sec:oracle}
+are ordinary proofs under explicit hypotheses. The following finite checks
+are supporting evidence and reproducible artifacts:
+\begin{itemize}
+\item Exhaustive replay of all $328\,125$ classified configurations for
+five representative openings; the $525$ all-one-prefix cases have explicit
+stored response matchings and counterattack histories.
+\item Independent paired-state legality enumeration of all $105$ cell
+matchings in each of two $3\times3$ cases, and all $135\,135$ in each of
+one $3\times5$ and one $5\times3$ case. The accepted matchings agree exactly
+with \cref{thm:structure} in those cases.
+\item A self-contained manuscript audit also replays all $42\,525$ classified
+configurations at height five and all $134\,400$ at height seven, across
+five representative openings each. Every counterattack finishes by ply $16$.
+These checks support the infinite-height-family argument in
+\cref{thm:obstruction}; they do not replace its proof.
+\item Twenty-one independently constructed midgame line-cover certificates,
+including nine forced losses, on 100 independently solved endgames.
+Negative tests reject malformed or unjustified certificates.
+\item An eight-node endgame strategy certificate corresponding to
+\cref{prop:endgame}, and the full-board draw in \cref{prop:draw}.
+\item Exact opening searches, horizon search, and proof-number searches
+whose unresolved outputs are preserved as unresolved.
+\end{itemize}
+
+The generalized exact engine is based on Steininger's published
+solver~\cite{steininger}; its research copy and license are retained.
+Tromp's reference page supplies historical context and board-size
+results~\cite{tromp}. None of the cited standard-board results is used to
+infer the $9\times9$ value. The elementary classification, its application,
+and the line-cover arguments are supplied in full here; this note is not a
+claim of peer review or proof-assistant verification.
+
+\subsection[Development directions]{Development directions with exact proof obligations}
+\begin{enumerate}
+\item \textbf{Adaptive response systems.} Extend fixed matchings to states
+with finitely many response modes. A valid certificate must specify the mode
+transition after each legal opposing move and prove a preserved invariant.
+The obstruction in \cref{thm:obstruction} does not exclude such systems.
+\item \textbf{Stronger strategic leaves.} Extend
+\cref{thm:cover} with other proved threat-control rules. An unverified
+heuristic must not be returned as an exact leaf value.
+\item \textbf{Theorem-guided opening certificates.} Search for a finite
+opening tree closed under every opposing reply, whose leaves are actual
+wins or independently verified strategic certificates. By
+\cref{prop:tree}, such a tree would prove an opening win.
+\item \textbf{Ultra-weak arguments.} A nonconstructive argument must still
+establish the empty-board value. Odd area alone fails by
+\cref{prop:draw}; failure of a restricted strategy class does not establish
+the opponent's full-game win. No such opening argument is claimed here.
+\end{enumerate}
+
+\appendix
+\section{Exact move histories}\label{app:histories}
+Digits $1,\ldots,9$ denote columns $A,\ldots,I$. Spaces below are grouping
+separators, not moves.
+
+\textbf{The 74-ply winning-endgame history.}
+\begin{Verbatim}[fontsize=\small,frame=single]
+394214915 666623782 294143441 343321958
+378255783 311517697 648668187 724886992 79
+\end{Verbatim}
+Replaying it gives \eqref{eq:endboard}. No prefix has already won; the
+stored verifier checks each prefix before accepting the next move.
+The strategy is $B9$, followed by $E7$ after $E6$, or by $E6$ after $G9$
+or $I9$.
+
+\textbf{The 81-ply drawn-game history.}
+\begin{Verbatim}[fontsize=\small,frame=single]
+391312592 458742532 275685278 998225892
+717344155 499998768 414433753 463371118 176668666
+\end{Verbatim}
+Its column multiplicities are all nine and its final color sets are the
+integers in \cref{prop:draw}. The bitwise identities
+\eqref{eq:drawbits} are an exact finite certificate of the absence of four.
+
+\section{Reproduction manifest}\label{app:manifest}
+Paths are relative to the research directory containing this LaTeX project.
+The source proofs and certificate checkers are intentionally separated from
+the large search programs.
+\begin{itemize}
+\item \path{pairing-refutations.py}: structural configurations and legal
+counterattack replay.
+\item \path{continuation/check-pairing-classification.py}: independent
+small-board enumeration of abstract matchings and paired-state legality.
+\item \path{pairing-proof.py}: independent line-cover certificate constructor
+and verifier; uses the standalone rules in \path{certificate.py}.
+\item \path{certificate.py}: exact endgame strategy-tree verification.
+\item \path{horizon.cpp} and \path{validate-horizon.cpp}: finite-horizon
+minimax and independent regression cases.
+\item \path{dfpn.cpp}: proof-number search, including seed-bound conversion.
+\item \path{merge-bounds.py}: duplicate-key grouping, bound compatibility,
+and exact-value extraction.
+\item \path{continuation/results.json}: frozen numerical record and source
+hashes. \path{continuation/REPORT.md} records computational context.
+\end{itemize}
+
+Representative commands, from that research directory, are:
+\begin{Verbatim}[fontsize=\footnotesize,frame=single]
+python3 pairing-refutations.py
+python3 continuation/check-pairing-classification.py
+python3 pairing-proof.py
+python3 certificate.py endgame-certificate.json
+sh build.sh
+./validate-horizon
+./dfpn --validate continuation/merged-bounds.csv
+\end{Verbatim}
+The script \path{latex-development-note/audit_note.py} independently checks
+the manuscript's draw integers, the three-ply endgame, and the height-five
+and height-seven counterattacks, using only Python's standard library.
+
+The associated files are development artifacts: future runs may produce
+new numerical records. This manuscript records the state reviewed on the
+date shown on its title page.
+
+\begin{thebibliography}{9}
+\raggedright
+\bibitem{allis}
+V. Allis.
+\emph{A Knowledge-based Approach of Connect-Four: The Game is Solved,
+White Wins}.
+Master's thesis, Vrije Universiteit Amsterdam, October 1988.
+\url{https://tromp.github.io/c4/connect4_thesis.pdf}.
+
+\bibitem{steininger}
+C. Steininger.
+\emph{c4: A fast Connect 4 solver}.
+Source repository, research baseline commit
+\path{fa27f186d2f1bf8e8fd61bfad63454c6e4b0431c}.
+\url{https://github.com/ChristopheSteininger/c4}.
+
+\bibitem{tromp}
+J. Tromp.
+\emph{John's Connect Four Playground}.
+\url{https://tromp.github.io/c4/c4.html}.
+Accessed 6 November 2026.
+\end{thebibliography}
+\end{document}

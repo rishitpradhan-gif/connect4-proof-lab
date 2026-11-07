@@ -1,0 +1,17 @@
+{
+  "status": "ALL_CLASSIFIED_ALWAYS_LEGAL_FIXED_PAIRINGS_REFUTED",
+  "opening_orbits": 5,
+  "column_matchings_per_opening": 105,
+  "prefix_length_options": [
+    1,
+    3,
+    5,
+    7,
+    9
+  ],
+  "classified_strategy_types": 328125,
+  "vertical_counterattacks": 327600,
+  "explicit_bottom_then_second_row_certificates": 525,
+  "max_counterattack_game_plies": 16,
+  "scope": "First-player fixed perfect matchings that prescribe an immediately legal partner reply for every gravity-consistent pair-completed state, even if terminal rules are ignored. Structural classification is proved in pairing-theorem.md. This does not rule out adaptive strategies or determine the game value."
+}

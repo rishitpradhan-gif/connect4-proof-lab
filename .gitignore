@@ -1,0 +1,17 @@
+/attempt
+/attempt-*
+/validate
+/validate-horizon
+/validate-pairing
+/horizon
+/dfpn
+/build/
+/out/
+/data/
+**/__pycache__/
+*.pyc
+*.dSYM/
+.DS_Store
+/latex-development-note/tmp/
+/latex-development-note/build-*.log
+/latex-development-note/output/pdf/*.log

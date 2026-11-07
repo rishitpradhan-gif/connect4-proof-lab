@@ -1,0 +1,7 @@
+{
+  "status": "VERIFIED",
+  "certificates": 21,
+  "forced_losses": 9,
+  "compared_independent_exact_endgames": 100,
+  "method": "Perfect empty-cell partition; immediately legal bottom cross-pairs; consecutive vertical pairs; explicit coverage of all 180 opponent winning lines; guaranteed responder four for each -1 bound."
+}

@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-06",
+  "pages": 13,
+  "native_compiler": "Tectonic 0.17.0",
+  "desktop_compilation": "success",
+  "tex_warnings": 0,
+  "unresolved_references": false,
+  "off_page_text_characters": 0,
+  "rendered_pages_visually_reviewed": true,
+  "opening_value_proved": false,
+  "proof_assistant_formalization": false,
+  "finite_witness_audit": {
+    "draw_integer_certificate": "PASS",
+    "three-ply_endgame": "PASS",
+    "generalized_obstruction_checks": [
+      {
+        "height": 5,
+        "representative_openings": 5,
+        "configurations": 42525,
+        "max_counterattack_ply": 16
+      },
+      {
+        "height": 7,
+        "representative_openings": 5,
+        "configurations": 134400,
+        "max_counterattack_ply": 16
+      }
+    ]
+  },
+  "sha256": {
+    "main.tex": "b48cbeedf7145257e4918ac6d32d9e98658b2dba12c04be918517f54454413d0",
+    "output/pdf/main.pdf": "b71b59f0c6f26f330ecd7aef4f23bf24eeef9cb423ddc568f3931a62bc8ad530"
+  }
+}

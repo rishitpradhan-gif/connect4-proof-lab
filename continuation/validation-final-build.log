@@ -1,0 +1,4 @@
+Loading table "data/table-9x9.csv" . . .
+Done. Read 0 table entries.
+
+PASS independent_array_states=169887 immediate_threat_checks=1493136 independent_exact_endgames=100 seed=20261105 losses=44 draws=26 wins=30 pairing_bounds=21 pairing_forced_losses=9

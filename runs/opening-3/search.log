@@ -1,0 +1,25 @@
+Loading table "data/table-9x9.csv" . . .
+Done. Read 0 table entries.
+
+Using a 9 x 9 board, a 512.00 MB table, and 1 threads.
+Running with strong solves disabled.
+
+Opening: 3 budget_seconds=600
+STATUS=UNKNOWN_TIMEOUT opening=3 side_to_move_value=null elapsed_seconds=600.005
+Time to solve       = 600.00 s
+Nodes per ms        = 3064
+Nodes: 
+    Exact           = 0
+    Lower           = 549633754
+    Upper           = 391756893
+    Leaf            = 897430796
+    Total           = 1838821443
+Table:
+    Hit rate        = 28.90%
+    New write rate  = 1.78%
+    Rewrite rate    = 0.00%
+    Overwrite rate  = 98.22%
+Best moves guessed  = 91.48%
+Worst moves guessed = 2.40%
+
+

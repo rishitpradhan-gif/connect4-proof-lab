@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "width": 9,
+    "height": 9,
+    "connect": 4,
+    "gravity": true,
+    "popout": false
+  },
+  "upstream": "https://github.com/ChristopheSteininger/c4",
+  "upstream_commit": "fa27f186d2f1bf8e8fd61bfad63454c6e4b0431c",
+  "license": "AGPL-3.0; see engine/LICENSE",
+  "modifications": [
+    "Full 128-bit position-key comparison replaces compressed CRT identity",
+    "One search worker per process; five independent first-move orbits",
+    "9x9 WDL mode; significant subtree bounds load/save enabled",
+    "Timed driver marks cancellation UNKNOWN_TIMEOUT"
+  ],
+  "hardware": {
+    "logical_cpus": 10,
+    "physical_memory_bytes": 25769803776
+  },
+  "initial_budget_seconds_per_opening": 600,
+  "independent_horizon_budget_seconds": 480
+}

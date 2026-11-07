@@ -1,0 +1,1 @@
+PASS independent_horizon_tests=1000 independent_full_depth_endgames=100 seed=34987 depths=1..4

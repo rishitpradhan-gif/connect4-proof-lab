@@ -1,0 +1,18 @@
+{
+  "draw_integer_certificate": "PASS",
+  "three-ply_endgame": "PASS",
+  "generalized_obstruction_checks": [
+    {
+      "height": 5,
+      "representative_openings": 5,
+      "configurations": 42525,
+      "max_counterattack_ply": 16
+    },
+    {
+      "height": 7,
+      "representative_openings": 5,
+      "configurations": 134400,
+      "max_counterattack_ply": 16
+    }
+  ]
+}

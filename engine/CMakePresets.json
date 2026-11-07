@@ -1,0 +1,53 @@
+﻿{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "generator": "Ninja",
+            "description": "Use Ninja with default settings",
+            "binaryDir": "${sourceDir}/out/${presetName}"
+          },
+          {
+            "name": "optimise",
+            "inherits": "default",
+            "description": "Optimised build configuration",
+            "cacheVariables": {
+              "MODE": "OPTIMISE",
+              "CMAKE_BUILD_TYPE": "Release"
+            }
+          },
+          {
+            "name": "debug",
+            "inherits": "default",
+            "description": "Debug build configuration",
+            "cacheVariables": {
+              "MODE": "DEBUG",
+              "CMAKE_BUILD_TYPE": "Debug"
+            }
+          },
+          {
+            "name": "wasm",
+            "inherits": "default",
+            "description": "WASM build configuration",
+            "cacheVariables": {
+              "MODE": "WASM",
+              "CMAKE_BUILD_TYPE": "Release"
+            }
+          }
+    ],
+    "buildPresets": [
+      {
+        "name": "optimise",
+        "configurePreset": "optimise"
+      },
+      {
+        "name": "debug",
+        "configurePreset": "debug"
+      },
+      {
+        "name": "wasm",
+        "configurePreset": "wasm"
+      }
+    ]
+}

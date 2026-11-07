@@ -1,0 +1,9 @@
+{
+  "opening": 1,
+  "reflected_opening": 9,
+  "status": "UNKNOWN_TIMEOUT",
+  "exit_code": 3,
+  "nodes": 108703217,
+  "side_to_move_value": null,
+  "log": "runs/opening-1/search-1793936451272101000.log"
+}

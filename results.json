@@ -1,0 +1,95 @@
+{
+  "empty_board_status": "UNRESOLVED",
+  "rules": "standard gravity 9x9 connect-four",
+  "full_game_opening_searches": [
+    {
+      "opening": 1,
+      "reflected_opening": 9,
+      "status": "UNKNOWN_TIMEOUT",
+      "side_to_move_value": null,
+      "node_visits": 1582015238,
+      "wall_seconds": 600.002,
+      "saved_bound_records": 2556
+    },
+    {
+      "opening": 2,
+      "reflected_opening": 8,
+      "status": "UNKNOWN_TIMEOUT",
+      "side_to_move_value": null,
+      "node_visits": 1324082788,
+      "wall_seconds": 600.0,
+      "saved_bound_records": 2016
+    },
+    {
+      "opening": 3,
+      "reflected_opening": 7,
+      "status": "UNKNOWN_TIMEOUT",
+      "side_to_move_value": null,
+      "node_visits": 1838821443,
+      "wall_seconds": 600.005,
+      "saved_bound_records": 3029
+    },
+    {
+      "opening": 4,
+      "reflected_opening": 6,
+      "status": "UNKNOWN_TIMEOUT",
+      "side_to_move_value": null,
+      "node_visits": 1465914898,
+      "wall_seconds": 600.004,
+      "saved_bound_records": 2890
+    },
+    {
+      "opening": 5,
+      "reflected_opening": 5,
+      "status": "UNKNOWN_TIMEOUT",
+      "side_to_move_value": null,
+      "node_visits": 1532472129,
+      "wall_seconds": 600.005,
+      "saved_bound_records": 2843
+    }
+  ],
+  "full_game_node_visits": 7743306496,
+  "saved_bound_records": 13334,
+  "independent_horizon": {
+    "last_completed": {
+      "depth": 24,
+      "horizon_value": 0,
+      "nodes": 4570253930,
+      "iteration_nodes": 2779857199,
+      "seconds": 282.905
+    },
+    "final_record": {
+      "status": "UNKNOWN_TIMEOUT",
+      "nodes": 7483424768
+    },
+    "interpretation": "Zero is a finite-horizon value, not a proved full-game draw."
+  },
+  "independent_endgame_certificate": {
+    "status": "VERIFIED",
+    "root_ply": 74,
+    "winning_player": 1,
+    "proof_nodes": 8,
+    "winning_leaves": 3,
+    "maximum_additional_plies": 3,
+    "certificate": "endgame-certificate.json"
+  },
+  "validation": {
+    "standard_7x6": "PASS: light suite and 1000 known-state weak/strong/self-play cases",
+    "9x9": "PASS independent_array_states=169887 immediate_threat_checks=1493136 independent_exact_endgames=100 seed=20261105 losses=44 draws=26 wins=30",
+    "horizon": "PASS independent_horizon_tests=1000 seed=34987 depths=1..4",
+    "certificate_negative_tests": [
+      {
+        "test": "missing_opponent_reply",
+        "status": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "test": "false_terminal_win",
+        "status": "REJECTED_AS_EXPECTED"
+      },
+      {
+        "test": "illegal_column",
+        "status": "REJECTED_AS_EXPECTED"
+      }
+    ]
+  }
+}

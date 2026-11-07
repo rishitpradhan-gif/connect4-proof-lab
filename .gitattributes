@@ -1,0 +1,5 @@
+engine/** linguist-vendored=true
+**/*.csv linguist-generated=true
+runs/** linguist-generated=true
+continuation/**/*.json linguist-generated=true
+*.pdf binary

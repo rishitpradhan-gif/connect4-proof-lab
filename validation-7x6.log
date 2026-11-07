@@ -1,0 +1,14 @@
+Using a 7 x 6 board, a 256.00 MB table, and 1 threads.
+
+Running in light test mode.
+Running unit tests . . .
+Running known state tests . . .
+	Test                               Type           Mean nodes   Nodes per ms     Guess rate       Time (s)          Games
+
+	tst/data/7x6/endgame_L1.txt        Weak                    6            917          89.0%           0.01           1000
+
+	tst/data/7x6/endgame_L1.txt        Strong                  9           1043          88.8%           0.01           1000
+
+	tst/data/7x6/endgame_L1.txt        Self Play              16            264          88.9%           0.06           1000
+
+All tests passed.

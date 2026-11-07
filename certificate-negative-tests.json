@@ -1,0 +1,14 @@
+[
+  {
+    "test": "missing_opponent_reply",
+    "status": "REJECTED_AS_EXPECTED"
+  },
+  {
+    "test": "false_terminal_win",
+    "status": "REJECTED_AS_EXPECTED"
+  },
+  {
+    "test": "illegal_column",
+    "status": "REJECTED_AS_EXPECTED"
+  }
+]

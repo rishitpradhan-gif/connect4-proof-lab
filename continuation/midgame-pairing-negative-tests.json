@@ -1,0 +1,14 @@
+[
+  {
+    "test": "missing_pair",
+    "status": "REJECTED_AS_EXPECTED"
+  },
+  {
+    "test": "unjustified_forced_win",
+    "status": "REJECTED_AS_EXPECTED"
+  },
+  {
+    "test": "reversed_vertical_reply",
+    "status": "REJECTED_AS_EXPECTED"
+  }
+]

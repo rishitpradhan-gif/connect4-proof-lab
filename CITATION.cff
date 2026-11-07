@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Please cite this research software and consult the included manuscript for exact theorem scope."
+title: "Connect Four Proof Lab: Structural Strategy Classification and Certified Adversarial Search"
+type: software
+authors:
+  - family-names: Pradhan
+    given-names: Rishit
+version: 0.1.0
+date-released: 2026-11-07
+license: AGPL-3.0
+repository-code: "https://github.com/rishitpradhan-gif/connect4-proof-lab"
+url: "https://github.com/rishitpradhan-gif/connect4-proof-lab"
+abstract: "Developmental computational game-theory research combining restricted response-pairing theorems, independently checked position certificates, and exact search. The empty 9x9 opening remains unresolved."
+keywords:
+  - computational game theory
+  - adversarial search
+  - proof certificates
+  - structural combinatorics
+  - connect four
