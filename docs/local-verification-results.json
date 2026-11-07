@@ -2,6 +2,7 @@
   "status": "PASS",
   "checks": [
     "released-identities",
+    "build",
     "independent-bitboard-endgames",
     "horizon-endgames",
     "proof-number-endgames",
@@ -12,7 +13,7 @@
     "manuscript-witnesses",
     "malformed-certificate-rejection"
   ],
-  "wall_seconds": 6.392,
+  "wall_seconds": 17.03,
   "opening_value": "UNKNOWN",
   "long_opening_searches_run": false
 }
